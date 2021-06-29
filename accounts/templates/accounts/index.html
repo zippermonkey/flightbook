@@ -1,0 +1,71 @@
+{% extends 'accounts/main.html' %}
+
+{% load mathfilters %}
+
+{% block content %}
+
+    <br>
+    <div class="row">
+        <div class="col">
+            <div class="card card-body">
+
+                <form method="get">
+                    {{ myFilter.form }}
+
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    {# 添加航班信息表 #}
+    <br>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Flight No</th>
+                        <th scope="col">From</th>
+                        <th scope="col">To</th>
+                        <th scope="col">起飞时间</th>
+                        <th scope="col">余票</th>
+                        <th scope="col">价格</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in flight %}
+                        <tr>
+                            <td>{{ i.name }}</td>
+                            <td>{{ i.start }}</td>
+                            <td>{{ i.end }}</td>
+                            <td>{{ i.departureTime|date:"Y-m-d H:i" }}</td>
+                            <td>{{ i.capacity|sub:i.purchased }}</td>
+                            <td>{{ i.price }}</td>
+                            {% if  i.capacity|sub:i.purchased > 0 %}
+                                    <td><a class="btn btn-sm btn-info" href="{% url 'buy' request.user.id  i.id %}">预定</a>
+                                    </td>
+                            {% else %}
+
+                                <td>
+                                    <button type="button" class="btn btn-secondary btn-sm" disabled>预定</button>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

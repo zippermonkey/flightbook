@@ -1,0 +1,49 @@
+{% extends 'accounts/main.html' %}
+
+{% load mathfilters %}
+
+{% block content %}
+    <h1>我的机票</h1>
+    <br>
+    {% if tickets %}
+        <div class="row">
+            <div class="col-md">
+                <div class="card card-body">
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">航班号</th>
+                            <th scope="col">From</th>
+                            <th scope="col">To</th>
+                            <th scope="col">起飞时间</th>
+                            <th scope="col">金额</th>
+                            <th scope="col">座位号</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in tickets %}
+                            <tr>
+                                <td>{{ i.flight.name }}</td>
+                                <td>{{ i.flight.start }}</td>
+                                <td>{{ i.flight.end }}</td>
+                                <td>{{ i.flight.departureTime|date:"Y-m-d H:i" }}</td>
+                                <td>{{ i.flight.price }} 元</td>
+                                <td>{{ i.seatrow }}排 {{ i.seatcolumn }}座</td>
+
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-primary" role="alert">
+            没有机票
+        </div>
+    {% endif %}
+{% endblock %}

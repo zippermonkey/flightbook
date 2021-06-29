@@ -1,0 +1,106 @@
+{% extends 'accounts/main.html' %}
+
+{% load mathfilters %}
+
+{% block content %}
+    <br>
+
+    <div class="row">
+        <div class="col">
+            <div class="col-md">
+                    <div class="card text-center text-white  mb-3" id="total-orders">
+                        <div class="card-header">
+                            <h5 class="card-title">所有订单</h5>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">{{ ordernum }}</h3>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-white  mb-3" id="orders-delivered">
+                    <div class="card-header">
+                        <h5 class="card-title">未支付</h5>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">{{ weizhifunum }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-white  mb-3" id="orders-pending">
+                    <div class="card-header">
+                        <h5 class="card-title">已支付</h5>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">{{ yizhifunum }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+     <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-white  mb-3" id="total-orders">
+                    <div class="card-header">
+                        <h5 class="card-title">已取票</h5>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">{{ yiqupiaonum }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% if orders %}
+        <div class="row">
+            <div class="col-md">
+                <div class="card card-body">
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">航班号</th>
+                            <th scope="col">From</th>
+                            <th scope="col">To</th>
+                            <th scope="col">起飞时间</th>
+                            <th scope="col">金额</th>
+                            <th scope="col">订单状态</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in orders %}
+                            <tr>
+                                <td>{{ i.flight.name }}</td>
+                                <td>{{ i.flight.start }}</td>
+                                <td>{{ i.flight.end }}</td>
+                                <td>{{ i.flight.departureTime|date:"Y-m-d H:i" }}</td>
+                                <td>{{ i.flight.price }} 元</td>
+                                <td>{{ i.status }}</td>
+
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-primary" role="alert">
+            没有订单
+        </div>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'accounts/main.html' %}
+
+{% load mathfilters %}
+
+{% block content %}
+
+    <h1>机票信息</h1>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">订单编号</th>
+                        <th scope="col">航班号</th>
+                        <th scope="col">From</th>
+                        <th scope="col">To</th>
+                        <th scope="col">起飞时间</th>
+                        <th scope="col">金额</th>
+                        <th scope="col">订单状态</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.flight.name }}</td>
+                        <td>{{ order.flight.start }}</td>
+                        <td>{{ order.flight.end }}</td>
+                        <td>{{ order.flight.departureTime|date:"Y-m-d H:i" }}</td>
+                        <td>{{ order.flight.price }} 元</td>
+                        <td>{{ order.status }}</td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+
+
+                <form action="" method="POST">
+
+                    {% csrf_token %}
+                    <div class="form-group row">
+
+
+                        <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">选取座位: 排</label>
+                        <div class="col-sm-10">
+                            <select class="form-control " id="exampleFormControlSelect1" name="row">
+                                {% for i in rows %}
+                                    <option>{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">选取座位: 列</label>
+                        <div class="col-sm-10">
+                            <select class="form-control " id="exampleFormControlSelect1" name="column">
+                                {% for i in columns %}
+                                    <option>{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <a class="btn btn-warning" href="{% url 'orders' request.user.id %}">返回</a>
+                    <input class="btn btn-danger" type="submit" name="Confirm" value="取票">
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    {% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
+{% endblock %}

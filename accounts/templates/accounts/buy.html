@@ -1,0 +1,61 @@
+{% extends 'accounts/main.html' %}
+
+{% load mathfilters %}
+
+{% block content %}
+    {% if order %}
+        <div class="container">
+            <div class="card  text-center">
+
+                <div class="card-body">
+                    <h5 class="card-title">提示信息</h5>
+                    <p class="card-text">您已经购买该航班</p>
+                    <a href="{% url 'home' %}" class="btn btn-primary">返回</a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h1>BUY 订单信息：</h1>
+        {#    显示订单消息#}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">航班号</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">起飞时间</th>
+                <th scope="col">金额</th>
+            </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>{{ flight.name }}</td>
+                    <td>{{ flight.start }}</td>
+                    <td>{{ flight.end }}</td>
+                    <td>{{ flight.departureTime|date:"Y-m-d H:i" }}</td>
+                    <td>{{ flight.price }} 元</td>
+                </tr>
+
+
+            </tbody>
+        </table>
+        <div class="container">
+            <div class="row justify-content-center ">
+                <div class="align-self-center">
+
+                    <form action="{% url 'buy' request.user.id flight.id %}" method="POST">
+
+                        {% csrf_token %}
+                        <a class="btn btn-warning" href="{% url 'home' %}">取消</a>
+
+                        <input class="btn btn-danger" type="submit" name="Confirm">
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+
+{% endblock %}

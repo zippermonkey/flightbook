@@ -1,0 +1,38 @@
+{% extends 'accounts/main.html' %}
+
+{% load mathfilters %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <table class="card card-body">
+
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        {% for field in form %}
+                            <tr>
+
+                                <td>{{ field.label_tag }}:</td>
+                                <td>{{ field }}</td>
+                                <td>{{ field.errors }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        <td></td>
+                        <td><a class="btn btn-warning" href="{% url 'manageflight' %}">返回</a></td>
+                        <td><input class="btn btn-info" type="submit" name="Confirm" value="确认"></td>
+                    </form>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

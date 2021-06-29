@@ -1,0 +1,51 @@
+{% extends 'accounts/main.html' %}
+
+{% load mathfilters %}
+
+{% block content %}
+    <h1>Add flight</h1>
+    <br>
+    <form action="" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+    </form>
+    <br>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Flight No</th>
+                        <th scope="col">From</th>
+                        <th scope="col">To</th>
+                        <th scope="col">起飞时间</th>
+                        <th scope="col">价格</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in flights %}
+                        <tr>
+                            <td>{{ i.name }}</td>
+                            <td>{{ i.start }}</td>
+                            <td>{{ i.end }}</td>
+                            <td>{{ i.departureTime|date:"Y-m-d H:i" }}</td>
+                            <td>{{ i.price }}</td>
+
+                            <td><a class="btn btn-sm btn-danger" href="{% url 'deleteflight' i.id %}">删除</a>
+                                </td>
+                        <td><a class="btn btn-sm btn-info" href="{% url 'modifyflight' i.id %}">修改</a>
+                                </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

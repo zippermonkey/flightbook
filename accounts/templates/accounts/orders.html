@@ -1,0 +1,70 @@
+{% extends 'accounts/main.html' %}
+
+{% load mathfilters %}
+
+{% block content %}
+    <h1>我的订单</h1>
+    <br>
+    {% if orders %}
+        <div class="row">
+            <div class="col-md">
+                <div class="card card-body">
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">航班号</th>
+                            <th scope="col">From</th>
+                            <th scope="col">To</th>
+                            <th scope="col">起飞时间</th>
+                            <th scope="col">金额</th>
+                            <th scope="col">订单状态</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in orders %}
+                            <tr>
+                                <td>{{ i.flight.name }}</td>
+                                <td>{{ i.flight.start }}</td>
+                                <td>{{ i.flight.end }}</td>
+                                <td>{{ i.flight.departureTime|date:"Y-m-d H:i" }}</td>
+                                <td>{{ i.flight.price }} 元</td>
+                                <td>{{ i.status }}</td>
+
+                                {% if  i.status == '未支付' %}
+                                    <td><a class="btn btn-sm btn-info"
+                                           href="{% url 'cancel' request.user.id i.id %}">退订</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-sm btn-info"
+                                           href="{% url 'pay'  request.user.id i.id %}">支付</a>
+                                    </td>
+                                {% elif  i.status == '已支付' %}
+                                    <td><a class="btn btn-sm btn-info"
+                                           href="{% url 'cancel' request.user.id i.id %}">退订</a>
+                                    </td>
+                                    <td><a class="btn btn-sm btn-info" href="{% url 'collectticket'  request.user.id i.id %}">取票</a>
+                                    </td>
+                                {% else %}
+                                    <td></td>
+                                    <td><a class="btn btn-sm btn-info" href="{% url 'tickets' request.user.id %}">查看机票</a>
+                                    </td>
+                                {% endif %}
+
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-primary" role="alert">
+            没有订单
+        </div>
+    {% endif %}
+{% endblock %}

@@ -69,6 +69,9 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th scope="col">订单编号</th>
+                            <th scope="col">客户编号</th>
+                            <th scope="col">用户名</th>
                             <th scope="col">航班号</th>
                             <th scope="col">From</th>
                             <th scope="col">To</th>
@@ -81,6 +84,9 @@
                         <tbody>
                         {% for i in orders %}
                             <tr>
+                                <td>{{ i.id }}</td>
+                                <td>{{ i.customer_id }}</td>
+                                <td>{{ i.customer.username }}</td>
                                 <td>{{ i.flight.name }}</td>
                                 <td>{{ i.flight.start }}</td>
                                 <td>{{ i.flight.end }}</td>

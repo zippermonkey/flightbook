@@ -17,13 +17,20 @@ conda activate django-env
 conda install django
 pip install django-filter django-mathfilters
 ```
+## MySql 设置
 
+本项目的setting.py中使用MySQL作为数据库，需要修改为自己的数据库的连接信息，同时在MySql数据库中新建一个名为`login`的数据库
+```sql
+create database login;
+```
 ## 启动项目
 ```sh
 git clone https://github.com/zippermonkey/flightbook.git
 cd flightbook
 # 修改setting.py 中的数据设置
 vim filghtbook/setting.py
+# 如果使用mysql 请新建名为login的数据库
+# 如果使用sqlite 修改setting.py为sqlite
 
 # 数据库迁移
 python manage.py migrate
